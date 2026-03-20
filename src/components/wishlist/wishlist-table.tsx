@@ -55,7 +55,7 @@ interface WishlistTableProps {
   items: WishlistItem[];
   onEdit: (item: WishlistItem) => void;
   onDelete: (id: string) => void;
-  onSaveCrop: (id: string, positionX: number, positionY: number, scale: number) => Promise<void>;
+  onSaveCrop: (id: string, positionX: number, positionY: number, scale: number) => Promise<unknown>;
 }
 
 export function WishlistTable({ items, onEdit, onDelete, onSaveCrop }: WishlistTableProps) {

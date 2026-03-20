@@ -20,7 +20,7 @@ interface CropEditorDialogProps {
   positionX: number; // horizontal 0–100, default 50
   positionY: number; // vertical 0–100, default 0
   scale: number;     // zoom 1–3
-  onSave: (positionX: number, positionY: number, scale: number) => Promise<void>;
+  onSave: (positionX: number, positionY: number, scale: number) => Promise<unknown>;
 }
 
 const MIN_SCALE = 1;

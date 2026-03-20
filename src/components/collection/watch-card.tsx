@@ -28,8 +28,8 @@ interface WatchCardProps {
   wearLog: WearLogEntry[];
   onEdit: (watch: Watch) => void;
   onDelete: (id: string) => void;
-  onLogToday: (strapType: StrapType) => Promise<void>;
-  onSaveCrop: (positionX: number, positionY: number, scale: number) => Promise<void>;
+  onLogToday: (strapType: StrapType) => Promise<unknown>;
+  onSaveCrop: (positionX: number, positionY: number, scale: number) => Promise<unknown>;
   todayEntry: WearLogEntry | undefined;
 }
 
@@ -176,14 +176,8 @@ export function WatchCard({ watch, wearLog, onEdit, onDelete, onLogToday, onSave
             </div>
           ) : (
             <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 gap-1 px-2 text-[11px] text-muted-foreground hover:text-foreground"
-                >
-                  + Log today
-                </Button>
+              <PopoverTrigger className="inline-flex h-6 cursor-pointer items-center gap-1 rounded-lg border border-transparent bg-transparent px-2 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground">
+                + Log today
               </PopoverTrigger>
               <PopoverContent className="w-auto p-3" align="start">
                 <p className="mb-2 text-[9px] font-semibold uppercase tracking-widest text-muted-foreground">
