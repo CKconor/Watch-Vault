@@ -56,9 +56,10 @@ interface WishlistTableProps {
   onEdit: (item: WishlistItem) => void;
   onDelete: (id: string) => void;
   onSaveCrop: (id: string, positionX: number, positionY: number, scale: number) => Promise<unknown>;
+  onPromoteToCollection: (item: WishlistItem) => void;
 }
 
-export function WishlistTable({ items, onEdit, onDelete, onSaveCrop }: WishlistTableProps) {
+export function WishlistTable({ items, onEdit, onDelete, onSaveCrop, onPromoteToCollection }: WishlistTableProps) {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<WatchType | "All">("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority | "All">("All");
@@ -202,6 +203,9 @@ export function WishlistTable({ items, onEdit, onDelete, onSaveCrop }: WishlistT
                           Adjust crop
                         </DropdownMenuItem>
                       )}
+                      <DropdownMenuItem onClick={() => onPromoteToCollection(item)}>
+                        I bought it!
+                      </DropdownMenuItem>
                       <DropdownMenuItem
                         className="text-destructive"
                         onClick={() => setDeleteTarget(item._id)}

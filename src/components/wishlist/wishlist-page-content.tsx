@@ -6,13 +6,18 @@ import { Button } from "@/components/ui/button";
 import { WishlistTable } from "./wishlist-table";
 import { WishlistForm } from "./wishlist-form";
 import { WishlistStats } from "./wishlist-stats";
+import { WatchForm } from "@/components/collection/watch-form";
 import { useWishlist } from "@/hooks/use-wishlist";
-import type { WishlistItem } from "@/lib/types";
+import { useWatches } from "@/hooks/use-watches";
+import type { WishlistItem, Watch } from "@/lib/types";
 
 export function WishlistPageContent() {
   const { wishlist, addItem, updateItem, deleteItem } = useWishlist();
+  const { addWatch } = useWatches();
   const [formOpen, setFormOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<WishlistItem | undefined>();
+  const [promoteTarget, setPromoteTarget] = useState<WishlistItem | undefined>();
+  const [watchFormOpen, setWatchFormOpen] = useState(false);
 
   function openAdd() {
     setEditTarget(undefined);
@@ -31,6 +36,31 @@ export function WishlistPageContent() {
       await addItem(values);
     }
   }
+
+  function openPromote(item: WishlistItem) {
+    setPromoteTarget(item);
+    setWatchFormOpen(true);
+  }
+
+  async function handlePromoteSubmit(values: Parameters<typeof addWatch>[0]) {
+    await addWatch(values);
+    if (promoteTarget) {
+      await deleteItem({ id: promoteTarget._id });
+    }
+    setPromoteTarget(undefined);
+  }
+
+  const promoteDefaults: Partial<Watch> | undefined = promoteTarget
+    ? {
+        brand: promoteTarget.brand,
+        name: promoteTarget.model,
+        reference: promoteTarget.reference ?? "",
+        purchasePrice: promoteTarget.estimatedPrice,
+        imageUrl: promoteTarget.imageUrl,
+        notes: promoteTarget.notes,
+        purchaseDate: "",
+      }
+    : undefined;
 
   return (
     <div className="space-y-8">
@@ -85,6 +115,7 @@ export function WishlistPageContent() {
           onSaveCrop={(id, imagePositionX, imagePosition, imageScale) =>
             updateItem({ id: id as WishlistItem["_id"], imagePositionX, imagePosition, imageScale })
           }
+          onPromoteToCollection={openPromote}
         />
       )}
 
@@ -93,6 +124,13 @@ export function WishlistPageContent() {
         onOpenChange={setFormOpen}
         onSubmit={handleSubmit}
         defaultValues={editTarget}
+      />
+
+      <WatchForm
+        open={watchFormOpen}
+        onOpenChange={(o) => { setWatchFormOpen(o); if (!o) setPromoteTarget(undefined); }}
+        onSubmit={handlePromoteSubmit}
+        defaultValues={promoteDefaults}
       />
     </div>
   );
