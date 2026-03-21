@@ -25,10 +25,10 @@ export function CollectionPage() {
             key={v}
             variant="ghost"
             size="sm"
-            className={`rounded-none pb-3 capitalize tracking-wide transition-none ${
+            className={`rounded-none pb-3 capitalize tracking-wide transition-none focus-visible:ring-0 focus-visible:border-b-2 hover:bg-transparent ${
               view === v
                 ? "border-b-2 border-foreground text-foreground"
-                : "text-muted-foreground hover:text-foreground"
+                : "text-muted-foreground hover:text-foreground focus-visible:border-foreground/50"
             }`}
             onClick={() => setView(v)}
           >

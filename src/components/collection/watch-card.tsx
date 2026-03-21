@@ -83,6 +83,7 @@ export function WatchCard({ watch, wearLog, onEdit, onDelete, onLogToday, onSave
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Adjust image crop"
               className="h-7 w-7 bg-background/85 backdrop-blur-sm hover:bg-background"
               onClick={() => setCropOpen(true)}
             >
@@ -92,6 +93,7 @@ export function WatchCard({ watch, wearLog, onEdit, onDelete, onLogToday, onSave
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Edit watch"
             className="h-7 w-7 bg-background/85 backdrop-blur-sm hover:bg-background"
             onClick={() => onEdit(watch)}
           >
@@ -103,6 +105,7 @@ export function WatchCard({ watch, wearLog, onEdit, onDelete, onLogToday, onSave
                 <Button
                   variant="ghost"
                   size="icon"
+                  aria-label="Delete watch"
                   className="h-7 w-7 bg-background/85 text-destructive backdrop-blur-sm hover:bg-background hover:text-destructive"
                 />
               }
@@ -188,7 +191,7 @@ export function WatchCard({ watch, wearLog, onEdit, onDelete, onLogToday, onSave
                     <button
                       key={strap}
                       onClick={() => handleLogToday(strap)}
-                      className="rounded-sm border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                      className="cursor-pointer rounded-sm border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
                     >
                       {strap}
                     </button>

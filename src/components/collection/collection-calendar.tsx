@@ -45,13 +45,13 @@ export function CollectionCalendar({ watches, wearLog }: CollectionCalendarProps
     <div className="space-y-4">
       {/* Month navigation */}
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="icon" onClick={() => setViewDate(subMonths(viewDate, 1))}>
+        <Button variant="ghost" size="icon" aria-label="Previous month" onClick={() => setViewDate(subMonths(viewDate, 1))}>
           <ChevronLeft className="h-4 w-4" />
         </Button>
         <span className="text-sm font-medium tracking-wide">
           {format(viewDate, "MMMM yyyy")}
         </span>
-        <Button variant="ghost" size="icon" onClick={() => setViewDate(addMonths(viewDate, 1))}>
+        <Button variant="ghost" size="icon" aria-label="Next month" onClick={() => setViewDate(addMonths(viewDate, 1))}>
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>

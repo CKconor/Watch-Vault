@@ -41,14 +41,17 @@ export function WearChart({ data }: { data: WearCount[] }) {
         />
         <Tooltip
           contentStyle={{
-            background: "oklch(0.155 0.008 58)",
-            border: "1px solid oklch(1 0 0 / 9%)",
+            background: "var(--popover)",
+            border: "1px solid var(--border)",
             borderRadius: "4px",
             fontSize: "12px",
+            color: "var(--popover-foreground)",
           }}
+          labelStyle={{ color: "var(--popover-foreground)" }}
+          itemStyle={{ color: "var(--muted-foreground)" }}
           formatter={(value) => [`${value} wears`, "Wears"]}
           labelFormatter={(label) => String(label)}
-          cursor={{ fill: "oklch(1 0 0 / 4%)" }}
+          cursor={{ fill: "var(--muted)", opacity: 0.5 }}
         />
         <Bar dataKey="count" radius={[0, 3, 3, 0]}>
           {top.map((_, i) => (

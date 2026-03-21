@@ -45,6 +45,7 @@ export function WearHistory({ entries, onRemove }: WearHistoryProps) {
               <Button
                 variant="ghost"
                 size="icon"
+                aria-label="Remove entry"
                 className="h-7 w-7 text-destructive hover:text-destructive"
                 onClick={() => onRemove(entry._id)}
               >

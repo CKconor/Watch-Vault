@@ -181,6 +181,7 @@ export function CropEditorDialog({
             <Button
               variant="outline"
               size="icon"
+              aria-label="Zoom out"
               className="h-7 w-7 shrink-0"
               onClick={() => setDraftScale((s) => clamp(s - 0.25, MIN_SCALE, MAX_SCALE))}
             >
@@ -204,6 +205,7 @@ export function CropEditorDialog({
             <Button
               variant="outline"
               size="icon"
+              aria-label="Zoom in"
               className="h-7 w-7 shrink-0"
               onClick={() => setDraftScale((s) => clamp(s + 0.25, MIN_SCALE, MAX_SCALE))}
             >

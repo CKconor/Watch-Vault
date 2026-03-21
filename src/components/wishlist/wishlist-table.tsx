@@ -192,7 +192,7 @@ export function WishlistTable({ items, onEdit, onDelete, onSaveCrop, onPromoteTo
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger
-                      render={<Button variant="ghost" size="icon" className="h-7 w-7" />}
+                      render={<Button variant="ghost" size="icon" aria-label="More options" className="h-7 w-7" />}
                     >
                       <MoreHorizontal className="h-4 w-4" />
                     </DropdownMenuTrigger>
