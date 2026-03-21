@@ -5,6 +5,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -219,6 +220,22 @@ export function WishlistTable({ items, onEdit, onDelete, onSaveCrop, onPromoteTo
             ))
           )}
         </TableBody>
+        {filtered.length > 0 && (
+          <TableFooter>
+            <TableRow>
+              <TableCell className="text-xs uppercase tracking-wide text-muted-foreground">
+                {filtered.length} {filtered.length === 1 ? "item" : "items"}
+              </TableCell>
+              <TableCell />
+              <TableCell />
+              <TableCell className="text-right font-mono font-medium">
+                {formatCurrency(filtered.reduce((sum, i) => sum + i.estimatedPrice, 0))}
+              </TableCell>
+              <TableCell />
+              <TableCell />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
 
       {cropTarget?.imageUrl && (
