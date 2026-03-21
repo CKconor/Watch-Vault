@@ -19,16 +19,16 @@ export function CollectionPage() {
   return (
     <div className="space-y-6">
       {/* Tab switcher */}
-      <div className="flex gap-1 border-b border-border/50 pb-0">
+      <div className="flex gap-1 border-b border-border/50">
         {(["grid", "calendar"] as View[]).map((v) => (
           <Button
             key={v}
             variant="ghost"
             size="sm"
-            className={`rounded-none pb-3 capitalize tracking-wide transition-none focus-visible:ring-0 focus-visible:border-b-2 hover:bg-transparent ${
+            className={`-mb-px rounded-none border-0 border-b-2 pb-3 capitalize tracking-wide transition-none focus-visible:ring-0 hover:bg-transparent ${
               view === v
-                ? "border-b-2 border-foreground text-foreground"
-                : "text-muted-foreground hover:text-foreground focus-visible:border-foreground/50"
+                ? "border-foreground text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground"
             }`}
             onClick={() => setView(v)}
           >
