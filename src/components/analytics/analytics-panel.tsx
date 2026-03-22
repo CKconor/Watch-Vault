@@ -10,7 +10,8 @@ import {
 import { WearChart } from "./wear-chart";
 import { StrapBreakdownPanel } from "./strap-breakdown";
 import { CostPerWearTable } from "./cost-per-wear-table";
-import { mostWorn, strapBreakdown, calcCostPerWear } from "@/lib/analytics";
+import { WearTrendsChart } from "./wear-trends-chart";
+import { mostWorn, strapBreakdown, calcCostPerWear, wearsByMonth } from "@/lib/analytics";
 import type { Watch, WearLogEntry } from "@/lib/types";
 
 interface AnalyticsPanelProps {
@@ -22,6 +23,7 @@ export function AnalyticsPanel({ watches, wearLog }: AnalyticsPanelProps) {
   const wearCounts = useMemo(() => mostWorn(watches, wearLog), [watches, wearLog]);
   const straps = useMemo(() => strapBreakdown(wearLog), [wearLog]);
   const cpw = useMemo(() => calcCostPerWear(watches, wearLog), [watches, wearLog]);
+  const trends = useMemo(() => wearsByMonth(wearLog), [wearLog]);
 
   if (watches.length === 0) return null;
 
@@ -55,6 +57,20 @@ export function AnalyticsPanel({ watches, wearLog }: AnalyticsPanelProps) {
           <AccordionContent>
             <div className="pt-2 pb-4">
               <StrapBreakdownPanel data={straps} />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="trends" className="border-border/50">
+          <AccordionTrigger
+            className="text-base font-normal hover:no-underline"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Wear Trends
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              <WearTrendsChart data={trends} />
             </div>
           </AccordionContent>
         </AccordionItem>

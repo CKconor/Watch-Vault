@@ -1,4 +1,21 @@
+import { format, subMonths, startOfMonth } from "date-fns";
 import type { Watch, WearLogEntry, StrapType } from "./types";
+
+export interface WearTrend {
+  month: string; // "MMM yy"
+  count: number;
+}
+
+export function wearsByMonth(wearLog: WearLogEntry[], months = 12): WearTrend[] {
+  const now = new Date();
+  return Array.from({ length: months }, (_, i) => {
+    const date = subMonths(startOfMonth(now), months - 1 - i);
+    const key = format(date, "yyyy-MM");
+    const month = format(date, "MMM yy");
+    const count = wearLog.filter((e) => e.date.startsWith(key)).length;
+    return { month, count };
+  });
+}
 
 export interface WearCount {
   watchId: string;
