@@ -11,6 +11,7 @@ import { WearChart } from "./wear-chart";
 import { StrapBreakdownPanel } from "./strap-breakdown";
 import { CostPerWearTable } from "./cost-per-wear-table";
 import { WearTrendsChart } from "./wear-trends-chart";
+import { YearInReview } from "./year-in-review";
 import { mostWorn, strapBreakdown, calcCostPerWear, wearsByMonth } from "@/lib/analytics";
 import type { Watch, WearLogEntry } from "@/lib/types";
 
@@ -71,6 +72,20 @@ export function AnalyticsPanel({ watches, wearLog }: AnalyticsPanelProps) {
           <AccordionContent>
             <div className="pt-2 pb-4">
               <WearTrendsChart data={trends} />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="yir" className="border-border/50">
+          <AccordionTrigger
+            className="text-base font-normal hover:no-underline"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Year in Review
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              <YearInReview watches={watches} wearLog={wearLog} />
             </div>
           </AccordionContent>
         </AccordionItem>

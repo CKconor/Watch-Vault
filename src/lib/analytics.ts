@@ -1,5 +1,71 @@
-import { format, subMonths, startOfMonth } from "date-fns";
+import { format, subMonths, startOfMonth, parse } from "date-fns";
 import type { Watch, WearLogEntry, StrapType } from "./types";
+
+export interface YearInReview {
+  year: number;
+  totalWears: number;
+  daysWorn: number;
+  mostWornWatch: string | null;
+  mostWornWatchCount: number;
+  busiestMonth: string | null;
+  busiestMonthCount: number;
+  favouriteStrap: StrapType | null;
+  mostWornBrand: string | null;
+}
+
+export function yearInReview(year: number, watches: Watch[], wearLog: WearLogEntry[]): YearInReview {
+  const prefix = String(year);
+  const yearLog = wearLog.filter((e) => e.date.startsWith(prefix));
+
+  const daysWorn = new Set(yearLog.map((e) => e.date)).size;
+
+  // Most worn watch
+  const wearsByWatch: Record<string, { name: string; brand: string; count: number }> = {};
+  for (const watch of watches) {
+    wearsByWatch[watch._id] = { name: watch.name, brand: watch.brand, count: 0 };
+  }
+  for (const entry of yearLog) {
+    if (wearsByWatch[entry.watchId]) wearsByWatch[entry.watchId].count++;
+  }
+  const topWatch = Object.values(wearsByWatch).sort((a, b) => b.count - a.count)[0];
+
+  // Busiest month
+  const monthCounts: Record<string, number> = {};
+  for (const entry of yearLog) {
+    const m = entry.date.slice(0, 7); // "yyyy-MM"
+    monthCounts[m] = (monthCounts[m] ?? 0) + 1;
+  }
+  const topMonthKey = Object.entries(monthCounts).sort((a, b) => b[1] - a[1])[0];
+  const busiestMonth = topMonthKey
+    ? format(parse(topMonthKey[0], "yyyy-MM", new Date()), "MMMM")
+    : null;
+
+  // Favourite strap
+  const strapCounts: Record<string, number> = {};
+  for (const entry of yearLog) {
+    strapCounts[entry.strapType] = (strapCounts[entry.strapType] ?? 0) + 1;
+  }
+  const topStrap = Object.entries(strapCounts).sort((a, b) => b[1] - a[1])[0];
+
+  // Most worn brand
+  const brandCounts: Record<string, number> = {};
+  for (const { brand, count } of Object.values(wearsByWatch)) {
+    brandCounts[brand] = (brandCounts[brand] ?? 0) + count;
+  }
+  const topBrand = Object.entries(brandCounts).sort((a, b) => b[1] - a[1])[0];
+
+  return {
+    year,
+    totalWears: yearLog.length,
+    daysWorn,
+    mostWornWatch: topWatch?.count > 0 ? topWatch.name : null,
+    mostWornWatchCount: topWatch?.count ?? 0,
+    busiestMonth,
+    busiestMonthCount: topMonthKey?.[1] ?? 0,
+    favouriteStrap: topStrap ? (topStrap[0] as StrapType) : null,
+    mostWornBrand: topBrand?.[1] > 0 ? topBrand[0] : null,
+  };
+}
 
 export interface WearTrend {
   month: string; // "MMM yy"
