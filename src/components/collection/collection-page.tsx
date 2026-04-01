@@ -13,7 +13,7 @@ type View = "grid" | "calendar";
 
 export function CollectionPage() {
   const { watches } = useWatches();
-  const { wearLog } = useWearLog();
+  const { wearLog, logWear, removeWear } = useWearLog();
   const [view, setView] = useState<View>("grid");
 
   return (
@@ -42,7 +42,7 @@ export function CollectionPage() {
       {view === "grid" ? (
         <WatchGrid />
       ) : (
-        <CollectionCalendar watches={watches} wearLog={wearLog} />
+        <CollectionCalendar watches={watches} wearLog={wearLog} onLog={logWear} onRemove={removeWear} />
       )}
 
       <AnalyticsPanel watches={watches} wearLog={wearLog} />

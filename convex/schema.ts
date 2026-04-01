@@ -47,6 +47,7 @@ export default defineSchema({
       v.literal("Chronograph"),
       v.literal("GMT"),
       v.literal("Pilot"),
+      v.literal("GADA"),
     ),
     priority: v.union(v.literal("Low"), v.literal("Medium"), v.literal("High")),
     imageUrl: v.optional(v.string()),

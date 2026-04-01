@@ -11,6 +11,7 @@ export const WATCH_TYPES = [
   "Chronograph",
   "GMT",
   "Pilot",
+  "GADA",
 ] as const;
 export type WatchType = (typeof WATCH_TYPES)[number];
 
