@@ -42,7 +42,7 @@ export function CollectionPage() {
       {view === "grid" ? (
         <WatchGrid />
       ) : (
-        <CollectionCalendar watches={watches} wearLog={wearLog} onLog={logWear} onRemove={removeWear} />
+        <CollectionCalendar watches={watches} wearLog={wearLog} onLog={logWear} onRemove={(args) => removeWear(args)} />
       )}
 
       <AnalyticsPanel watches={watches} wearLog={wearLog} />

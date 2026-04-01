@@ -30,7 +30,7 @@ interface CollectionCalendarProps {
   watches: Watch[];
   wearLog: WearLogEntry[];
   onLog: (args: { watchId: Id<"watches">; date: string; strapType: StrapType; notes?: string }) => Promise<unknown>;
-  onRemove: (id: string) => Promise<unknown>;
+  onRemove: (args: { id: Id<"wearLog"> }) => Promise<unknown>;
 }
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -38,7 +38,7 @@ const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 export function CollectionCalendar({ watches, wearLog, onLog, onRemove }: CollectionCalendarProps) {
   const [viewDate, setViewDate] = useState(() => startOfMonth(new Date()));
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [watchId, setWatchId] = useState<Id<"watches"> | "">("");
+  const [watchId, setWatchId] = useState<Id<"watches"> | null>(null);
   const [strap, setStrap] = useState<StrapType>("Bracelet");
   const [notes, setNotes] = useState("");
   const [saving, setSaving] = useState(false);
@@ -68,7 +68,7 @@ export function CollectionCalendar({ watches, wearLog, onLog, onRemove }: Collec
       setWatchId(existing.watchId);
     } else {
       setStrap("Bracelet");
-      setWatchId(watches[0]?._id ?? "");
+      setWatchId(watches[0]?._id ?? null);
     }
   }
 
@@ -76,7 +76,7 @@ export function CollectionCalendar({ watches, wearLog, onLog, onRemove }: Collec
     if (!selectedDate || !watchId) return;
     setSaving(true);
     try {
-      await onLog({ watchId: watchId as Id<"watches">, date: selectedDate, strapType: strap, notes: notes || undefined });
+      await onLog({ watchId, date: selectedDate, strapType: strap, notes: notes || undefined });
       setSelectedDate(null);
     } finally {
       setSaving(false);
@@ -89,7 +89,7 @@ export function CollectionCalendar({ watches, wearLog, onLog, onRemove }: Collec
     if (!entry) return;
     setSaving(true);
     try {
-      await onRemove(entry._id);
+      await onRemove({ id: entry._id });
       setSelectedDate(null);
     } finally {
       setSaving(false);
@@ -199,7 +199,7 @@ export function CollectionCalendar({ watches, wearLog, onLog, onRemove }: Collec
             <div className="space-y-3">
               <div className="space-y-1.5">
                 <Label>Watch</Label>
-                <Select value={watchId} onValueChange={(v) => setWatchId(v as Id<"watches">)}>
+                <Select value={watchId ?? ""} onValueChange={(v) => setWatchId(v as Id<"watches">)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a watch" />
                   </SelectTrigger>
